@@ -3,9 +3,11 @@
 A sleek, interactive, and fully responsive web app for modern electronics enthusiasts.
 Calculate, visualize, and learn everything about resistors, LEDs, and Ohm’s Law — all in one elegant interface.
 
-🌐 Live Demo
+🌐 Live Demo : https://resistancesimulator.onrender.com
 
 🎥 Preview
+<img width="1919" height="817" alt="Capture d'écran 2025-10-30 064429" src="https://github.com/user-attachments/assets/aee592af-661a-487b-90a3-a6be197ae21b" />
+
 
 ✨ Overview
 
