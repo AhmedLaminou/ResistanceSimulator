@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resistor Color Code Simulator</title>
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide-react@latest/dist/lucide-react.js"></script>
+</head>
+<body class="light">
+
+    <!-- Navigation Bar (Top) -->
+    {% include 'components/navbar.html' %}
+
+    <!-- ========================================================== -->
+    <!-- NEW HERO BANNER (avec images qui défilent)                  -->
+    <!-- ========================================================== -->
+    <section class="hero-banner">
+        <div class="scroller">
+            <div class="scroller__inner">
+                <!-- 
+                  IMPORTANT ! 
+                  REMPLACE CES NOMS PAR LES TIENS. 
+                  Ils doivent être dans /static/img/
+                -->
+                <img src="{{ url_for('static', filename='img/resistor.png') }}" alt="Resistor" 
+                     onerror="this.style.display='none'">
+                <img src="{{ url_for('static', filename='img/circuit_board.png') }}" alt="Circuit Board"
+                     onerror="this.style.display='none'">
+                <img src="{{ url_for('static', filename='img/leds.png') }}" alt="LEDs"
+                     onerror="this.style.display='none'">
+                <img src="{{ url_for('static', filename='img/electronics.png') }}" alt="Electronics"
+                     onerror="this.style.display='none'">
+                <img src="{{ url_for('static', filename='img/ai.png') }}" alt="Electronics"
+                     onerror="this.style.display='none'">
+                <img src="{{ url_for('static', filename='img/commputer.png') }}" alt="Electronics"
+                     onerror="this.style.display='none'">
+                 <img src="{{ url_for('static', filename='img/commputer.png') }}" alt="Electronics"
+                     onerror="this.style.display='none'">
+                <img src="{{ url_for('static', filename='img/m1.jpeg') }}" alt="Electronics"
+                     onerror="this.style.display='none'">
+                <img src="{{ url_for('static', filename='img/ms1.avif') }}" alt="Electronics"
+                     onerror="this.style.display='none'">
+                <img src="{{ url_for('static', filename='img/g2.webp') }}" alt="Electronics"
+                     onerror="this.style.display='none'">
+                <img src="{{ url_for('static', filename='img/g1.jpeg') }}" alt="Electronics"
+                     onerror="this.style.display='none'">
+                <img src="{{ url_for('static', filename='img/v2.jpeg') }}" alt="Electronics"
+                     onerror="this.style.display='none'">
+                <img src="{{ url_for('static', filename='img/v1.jpeg') }}" alt="Electronics"
+                     onerror="this.style.display='none'">
+                <img src="{{ url_for('static', filename='img/m3.jpeg') }}" alt="Electronics"
+                     onerror="this.style.display='none'">
+
+              
+            </div>
+        </div>
+    </section>
+    <!-- ========================================================== -->
+    <!-- END OF HERO BANNER                                         -->
+    <!-- ========================================================== -->
+
+
+    <!-- "APP LAYOUT" STRUCTURE (Sidebar + Content) -->
+    <div class="app-layout">
+        
+        <!-- Sidebar Menu -->
+        <nav id="app-sidebar">
+            <div class="sidebar-header">
+                <i data-lucide="layout-grid"></i>
+                <h3>Tools</h3>
+            </div>
+            <ul class="sidebar-nav-list">
+                <li>
+                    <a href="#" class="sidebar-link active" data-page="page-simulator">
+                        <i data-lucide="sliders-horizontal"></i>
+                        <span>Value <> Color</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link" data-page="page-led-calculator">
+                        <i data-lucide="lightbulb"></i>
+                        <span>LED Resistor</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link" data-page="page-ohms-law">
+                        <i data-lucide="zap"></i>
+                        <span>Ohm's Law</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link" data-page="page-series-parallel">
+                        <i data-lucide="move-horizontal"></i>
+                        <span>Series/Parallel</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link" data-page="page-builder">
+                        <i data-lucide="construction"></i>
+                        <span>Resistor Builder</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link" data-page="page-history">
+                        <i data-lucide="history"></i>
+                        <span>History</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Content Area (displays one "page" at a time) -->
+        <main id="app-content">
+
+            <!-- Page 1: Simulator (default) -->
+            <div id="page-simulator" class="tool-page active">
+                <!-- Value -> Color Card -->
+                <section class="card">
+                    <h1>Resistor Color Code Simulator</h1>
+                    <p class="subtitle">Enter a value (e.g., 10k, 4.7M) to see its colors.</p>
+                    <div class="resistor-visual-container">
+                        <div class="resistor-wire left"></div>
+                        <div class="resistor-body"><div id="resistor-bands-container"></div></div>
+                        <div class="resistor-wire right"></div>
+                    </div>
+                    <p id="valueLabel" class="value-display">Enter a value to start</p>
+                    <div class="controls-grid">
+                        <div class="input-group">
+                            <input type="text" id="resistanceInput" placeholder="Ex: 4.7k, 1M, 330r, 0.5">
+                            <select id="bandSelect">
+                                <option value="4">4-Band</option>
+                                <option value="5">5-Band</option>
+                            </select>
+                        </div>
+                        <button id="showBtn" class="btn btn-primary"><i data-lucide="eye"></i>Calculate</button>
+                        <button id="randomBtn" class="btn btn-secondary"><i data-lucide="shuffle"></i>Random</button>
+                    </div>
+                </section>
+                
+                <!-- Color -> Value Card -->
+                <section class="card">
+                    <h2>Calculate From Colors</h2>
+                    <p class="subtitle">Use the "4-Band/5-Band" selector above, then pick your colors.</p>
+                    <div class="inverse-calculator-grid">
+                        <div class="inv-select-wrapper"><label for="invBand1">1st Digit</label><select id="invBand1" class="inv-select"></select></div>
+                        <div class="inv-select-wrapper"><label for="invBand2">2nd Digit</label><select id="invBand2" class="inv-select"></select></div>
+                        <div class="inv-select-wrapper" id="invBand3Wrapper"><label for="invBand3">3rd Digit</label><select id="invBand3" class="inv-select"></select></div>
+                        <div class="inv-select-wrapper"><label for="invMultiplier">Multiplier</label><select id="invMultiplier" class="inv-select"></select></div>
+                        <div class="inv-select-wrapper"><label for="invTolerance">Tolerance</label><select id="invTolerance" class="inv-select"></select></div>
+                    </div>
+                    <p id="inverseValueLabel" class="value-display">Pick colors to see the value.</p>
+                </section>
+            </div>
+
+            <!-- Page 2: LED Resistor Calculator -->
+            <div id="page-led-calculator" class="tool-page">
+                <section class="card">
+                    <h2>LED Resistor Calculator</h2>
+                    <p class="subtitle">Find the perfect resistor for your LED circuit.</p>
+                    <!-- Simple circuit diagram -->
+                    <div class="circuit-diagram">
+                        <span>(Vs)</span>
+                        <i data-lucide="battery-charging"></i>
+                        <span>----[ R ]----</span>
+                        <i data-lucide="lightbulb"></i>
+                        <span>----(GND)</span>
+                    </div>
+                    <div class="ohms-law-grid"> <!-- Re-using the same grid style -->
+                        <div class="input-with-unit">
+                            <label for="ledSupplyVoltage">Supply Voltage (V)</label>
+                            <div class="input-wrapper"><input type="text" id="ledSupplyVoltage" placeholder="e.g., 5, 9"><span>V</span></div>
+                        </div>
+                        <div class="input-with-unit">
+                            <label for="ledForwardVoltage">LED Forward Voltage (V)</label>
+                            <div class="input-wrapper"><input type="text" id="ledForwardVoltage" placeholder="e.g., 2.2 (Red)"><span>V</span></div>
+                        </div>
+                        <div class="input-with-unit">
+                            <label for="ledForwardCurrent">LED Forward Current (mA)</label>
+                            <div class="input-wrapper"><input type="text" id="ledForwardCurrent" placeholder="e.g., 20"><span>mA</span></div>
+                        </div>
+                    </div>
+                    <div class="ohms-law-controls">
+                        <button id="ledCalculateBtn" class="btn btn-primary"><i data-lucide="calculator"></i>Calculate Resistor</button>
+                        <button id="ledShowResistorBtn" class="btn btn-secondary" style="display: none;"><i data-lucide="eye"></i>Show Colors</button>
+                    </div>
+                    <p id="ledResultLabel" class="value-display">Enter all values to calculate.</p>
+                </section>
+            </div>
+
+            <!-- Page 3: Ohm's Law (hidden) -->
+            <div id="page-ohms-law" class="tool-page">
+                <section class="card">
+                    <h2>Ohm's Law Calculator</h2>
+                    <p class="subtitle">Enter any two values to calculate the third. Use units like 'k', 'm', 'u'.</p>
+                    <div class="ohms-law-grid">
+                        <div class="input-with-unit">
+                            <label for="ohmVoltage">Voltage (V)</label>
+                            <div class="input-wrapper"><input type="text" id="ohmVoltage" placeholder="e.g., 5, 9v, 1.5"><span>V</span></div>
+                        </div>
+                        <div class="input-with-unit">
+                            <label for="ohmCurrent">Current (A)</label>
+                            <div class="input-wrapper"><input type="text" id="ohmCurrent" placeholder="e.g., 0.02, 20m, 500u"><span>A</span></div>
+                        </div>
+                        <div class="input-with-unit">
+                            <label for="ohmResistance">Resistance (Ω)</label>
+                            <div class="input-wrapper"><input type="text" id="ohmResistance" placeholder="e.g., 330, 4.7k, 1M"><span>Ω</span></div>
+                        </div>
+                    </div>
+                    <div class="ohms-law-controls">
+                        <button id="ohmCalculateBtn" class="btn btn-primary"><i data-lucide="zap"></i>Calculate</button>
+                        <button id="ohmClearBtn" class="btn btn-secondary"><i data-lucide="rotate-ccw"></i>Clear</button>
+                    </div>
+                    <p id="ohmResultLabel" class="value-display">Enter two values to calculate.</p>
+                </section>
+            </div>
+
+            <!-- Page 4: Series/Parallel (hidden) -->
+            <div id="page-series-parallel" class="tool-page">
+                <section class="card">
+                    <h2>Series & Parallel Calculator</h2>
+                    <p class="subtitle">Add multiple resistors and calculate their total series or parallel value.</p>
+                    <div class="series-parallel-controls">
+                        <button id="addResistorBtn" class="btn btn-secondary"><i data-lucide="plus"></i>Add Resistor</button>
+                        <select id="connectionType">
+                            <option value="series">Series</option>
+                            <option value="parallel">Parallel</option>
+                        </select>
+                    </div>
+                    <div id="resistorList" class="resistor-input-list"></div>
+                    <button id="calcTotalBtn" class="btn btn-primary"><i data-lucide="check-check"></i>Calculate Total</button>
+                    <p id="totalResistanceLabel" class="value-display"></p>
+                </section>
+            </div>
+            
+            <!-- Page 5: Builder (hidden) -->
+            <div id="page-builder" class="tool-page">
+                <section class="card">
+                    <h2>Build Your Own Resistor</h2>
+                    <p class="subtitle">Drag and drop colors to build your resistor.</p>
+                    <div class="drag-drop-area">
+                        <div id="dragBands" class="drag-source">
+                            <div class="color-chip" draggable="true" data-value="0" style="background:black;" title="Black (0)"></div>
+                            <div class="color-chip" draggable="true" data-value="1" style="background:brown;" title="Brown (1)"></div>
+                            <div class="color-chip" draggable="true" data-value="2" style="background:red;" title="Red (2)"></div>
+                            <div class="color-chip" draggable="true" data-value="3" style="background:orange;" title="Orange (3)"></div>
+                            <div class="color-chip" draggable="true" data-value="4" style="background:yellow;" title="Yellow (4)"></div>
+                            <div class="color-chip" draggable="true" data-value="5" style="background:green;" title="Green (5)"></div>
+                            <div class="color-chip" draggable="true" data-value="6" style="background:blue;" title="Blue (6)"></div>
+                            <div class="color-chip" draggable="true" data-value="7" style="background:purple;" title="Purple (7)"></div>
+                            <div class="color-chip" draggable="true" data-value="8" style="background:grey;" title="Grey (8)"></div>
+                            <div class="color-chip" draggable="true" data-value="9" style="background:white;" title="White (9)"></div>
+                        </div>
+                        <div id="dropZone" class="drop-target">
+                            <div class="drop-slot" data-index="0" data-label="1st Digit"></div>
+                            <div class="drop-slot" data-index="1" data-label="2nd Digit"></div>
+                            <div class="drop-slot" data-index="2" data-label="3rd/Mult."></div>
+                            <div class="drop-slot" data-index="3" data-label="Mult./Tol."></div>
+                        </div>
+                    </div>
+                    <button id="calculateCustomBtn" class="btn btn-primary"><i data-lucide="calculator"></i>Calculate</button>
+                    <p id="customValueLabel" class="value-display"></p>
+                </section>
+            </div>
+            
+            <!-- Page 6: History (hidden) -->
+            <div id="page-history" class="tool-page">
+                <section class="card">
+                    <h2 class="card-header-flex">
+                        <span>
+                            <i data-lucide="history"></i> History
+                        </span>
+                        <span class="header-controls">
+                            <button id="exportHistoryBtn" class="btn-icon" title="Export as CSV"><i data-lucide="download"></i></button>
+                            <button id="clearHistoryBtn" class="btn-icon danger" title="Clear History"><i data-lucide="trash-2"></i></button>
+                        </span>
+                    </h2>
+                    <p class="subtitle">Your recent calculations are saved in your browser.</p>
+                    <div id="historyPanel" class="history-list">
+                        <p>No calculations yet.</p>
+                    </div>
+                </section>
+            </div>
+
+        </main> <!-- End #app-content -->
+
+    </div> <!-- End .app-layout -->
+    
+    <!-- MODAL (for alerts) -->
+    <div id="modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3 id="modalTitle">Title</h3>
+            <p id="modalMessage">Message</p>
+            <button id="modalCloseBtn" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include 'components/footer.html' %}
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        lucide.createIcons(); // Activate icons
+    </script>
+    
+    <!-- Audio (hidden) -->
+    <audio id="successSound" src="{{ url_for('static', filename='audio/success.wav') }}" preload="auto"></audio>
+    <audio id="errorSound" src="{{ url_for('static', filename='audio/error.wav') }}" preload="auto"></audio>
+    <audio id="bgMusic" src="{{ url_for('static', filename='audio/bg.mp3') }}" loop preload="auto"></audio>
+</body>
+</html>

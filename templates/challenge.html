@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge Mode - Resistor Sim</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://unpkg.com/lucide-react@latest/dist/lucide-react.js"></script>
+</head>
+<body class="light">
+
+    {% include 'components/navbar.html' %}
+
+    <main class="main-content">
+
+        <div id="modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <h3 id="modalTitle">Title</h3>
+                <p id="modalMessage">Message</p>
+                <button id="modalCloseBtn" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+
+        <section class="card">
+            <h1>Challenge Mode!</h1>
+            <p class="subtitle">Guess the value of the displayed resistor.</p>
+
+            <div class_="" id="scoreLabel" class="score-display">Score: 0</div>
+
+            <div class="resistor-visual-container challenge-mode">
+                <div class="resistor-wire left"></div>
+                <div class="resistor-body">
+                    <div id="resistor-bands-container">
+                    </div>
+                </div>
+                <div class="resistor-wire right"></div>
+            </div>
+
+            <div class="controls-grid">
+                <div class="input-group">
+                    <input type="text" id="guessInput" placeholder="Your answer (e.g., 10k)">
+                    <select id="bandSelectChallenge">
+                        <option value="4">4 Bands</option>
+                        <option value="5">5 Bands</option>
+                    </select>
+                </div>
+                <button id="submitBtn" class="btn btn-primary"><i data-lucide="check"></i>Submit</button>
+                <button id="nextBtn" class="btn btn-secondary"><i data-lucide="skip-forward"></i>Next</button>
+            </div>
+        </section>
+
+    </main>
+
+    {% include 'components/footer.html' %}
+
+    <script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/challenge.js') }}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
